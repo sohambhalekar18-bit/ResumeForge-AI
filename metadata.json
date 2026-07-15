@@ -1,0 +1,6 @@
+{
+  "name": "AI Resume Analyzer",
+  "description": "An enterprise-grade AI-powered Resume Analyzer and ATS Optimizer SaaS featuring dynamic scorecards, deep grammar analysis, job matching, cover letter generators, and interview preparation roadmaps.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

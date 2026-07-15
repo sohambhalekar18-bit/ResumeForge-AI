@@ -64,7 +64,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to experienc
 
 ---
 
-## 🐳 Running Outside Google AI Studio (Production Build)
+## 🐳 Production Build
 
 To build and compile the application for any generic cloud provider, virtual machine, or Docker container:
 

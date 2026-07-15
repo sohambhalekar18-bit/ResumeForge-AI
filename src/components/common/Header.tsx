@@ -6,6 +6,7 @@
 import React, { useState } from "react";
 import { Sparkles, FileText, Briefcase, Award, GraduationCap, Globe, Shield, Menu, X, Activity } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import logo from "../../assets/logo.png";
 
 interface HeaderProps {
   activeTab: string;
@@ -37,17 +38,17 @@ export default function Header({ activeTab, setActiveTab, hasData }: HeaderProps
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white shadow-lg shadow-indigo-500/20">
-            <Sparkles className="h-5 w-5" />
-            <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-violet-500"></span>
-            </span>
-          </div>
+          <div className="h-12 w-12 overflow-hidden rounded-xl">
+  <img
+    src={logo}
+    alt="ResumeForge AI"
+    className="h-full w-full object-contain"
+  />
+</div>
           <div>
-            <span className="text-lg font-bold tracking-tight text-slate-900 font-display">CV</span>
-            <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent font-display">Insight</span>
-            <span className="ml-1.5 rounded-full bg-indigo-50 px-2 py-0.5 text-2xs font-semibold text-indigo-700">SaaS v2.0</span>
+            <span className="text-lg font-bold tracking-tight text-slate-900 font-display">Resume</span>
+            <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent font-display">Forge</span>
+            <span className="ml-1.5 rounded-full bg-indigo-50 px-2 py-0.5 text-2xs font-semibold text-indigo-700">AI</span>
           </div>
         </motion.div>
 
@@ -94,8 +95,8 @@ export default function Header({ activeTab, setActiveTab, hasData }: HeaderProps
         {/* User Stats / Profile Area */}
         <div className="flex items-center gap-4">
           <div className="hidden sm:flex flex-col items-end text-right">
-            <span className="text-xs font-bold text-slate-900">Soham Bhalekar</span>
-            <span className="text-4xs font-extrabold tracking-wider text-indigo-600 uppercase bg-indigo-50 px-2 py-0.5 rounded">PRO LEVEL 4</span>
+            <span className="text-xs font-bold text-slate-900"></span>
+            <span className="text-4xs font-extrabold tracking-wider text-indigo-600 uppercase bg-indigo-50 px-2 py-0.5 rounded">PREMIUM</span>
           </div>
           
           <motion.div 
@@ -103,13 +104,70 @@ export default function Header({ activeTab, setActiveTab, hasData }: HeaderProps
             whileHover={{ scale: 1.05, rotate: 2 }}
           >
             <img
-              referrerPolicy="no-referrer"
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80"
-              alt="User profile"
-              className="h-full w-full object-cover"
-            />
+  src={logo}
+  alt="ResumeForge AI"
+  className="h-full w-full object-cover"
+/>
           </motion.div>
 
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="xl:hidden p-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Dropdown */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="xl:hidden border-t border-slate-100 bg-white overflow-hidden"
+          >
+            <div className="space-y-1.5 p-4">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    disabled={item.disabled}
+                    onClick={() => {
+                      setActiveTab(item.id);
+                      setMobileMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold transition-all ${
+                      item.disabled
+                        ? "cursor-not-allowed text-slate-300 opacity-50"
+                        : isActive
+                        ? "bg-slate-950 text-white"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Icon className="h-4.5 w-4.5" />
+                      <span>{item.label}</span>
+                    </div>
+                    {item.badge && (
+                      <span className="rounded-md bg-violet-100 px-1.5 py-0.5 text-3xs font-extrabold text-violet-700 uppercase">
+                        {item.badge}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}
           {/* Mobile Menu Toggle */}
           <button 
             className="xl:hidden p-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50"
